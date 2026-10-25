@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="ru" class="no-js">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+  // Основной язык сайта – английский (русский – по кнопке RU или ?lang=ru).
+  // Разметка на русском, перевод из lang/en.js; пока он грузится, страница скрыта (не дольше 2.5 с).
+  try {
+    var q = new URLSearchParams(location.search).get('lang'), saved = null;
+    try { saved = localStorage.getItem('rw-lang'); } catch (e) {}
+    if ((q === 'en' || q === 'ru' ? q : saved || 'en') === 'en') document.documentElement.classList.add('i18n-wait');
+  } catch (e) {}
+</script>
+<style>.i18n-wait body{visibility:hidden}</style>
+<script>
+  // цвет логотипа и всех плашек: при каждом заходе – случайный из 5 основных (круг 35 с, шаг 7 с), у всех .tint одинаковый
+  document.documentElement.style.setProperty('--tint-delay', -(Math.floor(Math.random() * 5) * 7) + 's');
+</script>
+<link rel="preload" href="lang/en.js" as="script">
+<title>DOBERMAN – AI-видео для брендов</title>
+<meta name="description" content="AI-видео для брендов от авторов книги о рекламной съёмке. Свет, композиция и фактура уровня продакшна.">
+
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+
+<!-- ==== Превью ссылки в Telegram / соцсетях ==== -->
+<meta property="og:title" content="DOBERMAN – AI video for brands">
+<meta property="og:description" content="AI video for brands from the authors of a book on commercial photography. Lighting, composition and texture at production level.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dobermanstudio.ai/">
+<meta property="og:site_name" content="DOBERMAN">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta property="og:image" content="https://dobermanstudio.ai/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="DOBERMAN – AI video for brands">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- Шрифты лежат на нашем сервере (без обращений к Google – так безопаснее по 152-ФЗ и быстрее в РФ) -->
+<link rel="preload" href="fonts/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/inter-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts/fonts.css">
+
+<script>document.documentElement.classList.replace('no-js','js')</script>
+
+<!--
+  ПРОТОТИП. Всё, что подсвечено пунктиром (класс .ph, обычно «N»), – заглушка:
+  заменить на реальные данные (реквизиты, контакты).
+-->
+
+<style>
+  :root{
+    --bg:            #09090c;
+    --bg-soft:       #0d0d12;
+    --surface:       #131319;
+    --surface-2:     #1a1a22;
+    --line:          rgba(255,255,255,.07);
+    --line-strong:   rgba(255,255,255,.12);
+    --text:          #f6f6f8;
+    --muted:         #9a9aa6;
+    --muted-dim:     #6f6f7b;
+    --accent:        #4f5bf2;
+    --accent-hover:  #5f6bff;
+    --accent-soft:   #7c86f7;
+    /* цвета графика «Съёмка vs AI» (проверены на различимость, в т.ч. при дальтонизме) */
+    --c-shoot:       #b47a43;
+    --c-ai:          #7c86f7;
+    --radius:        16px;
+    --radius-lg:     22px;
+    --maxw:          1080px;
+    --ease:          cubic-bezier(.22,.61,.36,1);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:"Inter",system-ui,-apple-system,sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  body.locked{overflow:hidden}
+  a{color:inherit;text-decoration:none}
+  img,video{max-width:100%;display:block}
+  section[id],footer[id]{scroll-margin-top:78px}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+  /* заглушка, которую нужно заменить реальным значением */
+  .ph{color:var(--accent-soft);border-bottom:1px dashed currentColor}
+
+  .eyebrow{
+    font-family:"Manrope",sans-serif;
+    font-weight:700;
+    font-size:12.5px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--accent-soft);
+  }
+  .section-label{
+    display:block;text-align:center;
+    font-family:"Manrope",sans-serif;
+    font-weight:700;font-size:12.5px;
+    letter-spacing:.2em;text-transform:uppercase;
+    color:var(--muted-dim);
+    margin-bottom:44px;
+  }
+  .section-title{
+    font-family:"Manrope",sans-serif;font-weight:800;
+    font-size:clamp(28px,4vw,40px);letter-spacing:-.01em;line-height:1.15;
+    text-align:center;margin:-28px auto 18px;max-width:700px;
+  }
+  .section-lead{color:var(--muted);font-size:16px;text-align:center;max-width:600px;margin:0 auto 46px}
+  .block{padding:96px 0 0}
+  .divided{margin-top:96px}
+
+  /* ---------- HEADER ---------- */
+  .site-header{
+    position:sticky;top:0;z-index:50;
+    transition:background .3s var(--ease),border-color .3s var(--ease),backdrop-filter .3s;
+    border-bottom:1px solid transparent;
+  }
+  .site-header.scrolled{
+    background:rgba(9,9,12,.72);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .header-inner{
+    display:flex;align-items:center;justify-content:space-between;
+    height:78px;
+  }
+  .brand{display:flex;align-items:center;gap:11px;font-family:"Manrope",sans-serif}
+  .brand-mark{
+    width:34px;height:34px;border-radius:9px;
+    display:grid;place-items:center;
+    background:linear-gradient(150deg,var(--accent),#3a45d6);
+    box-shadow:0 6px 20px -6px rgba(79,91,242,.7);
+  }
+  .brand-mark svg{width:15px;height:15px;fill:#fff;margin-left:2px}
+  .brand-name{font-weight:800;font-size:18px;letter-spacing:.03em;white-space:nowrap}
+  .brand-name span{color:var(--muted-dim);font-weight:600}
+
+  .nav{display:flex;gap:34px;margin-left:auto}
+  .lang-switch{position:relative;isolation:isolate;display:flex;gap:2px;padding:3px;margin-left:30px;border:1px solid var(--line-strong);border-radius:999px}
+  /* подложка активного языка плавно переезжает между RU и EN (кнопки одинаковой ширины) */
+  .lang-switch::before{content:"";position:absolute;z-index:-1;top:3px;bottom:3px;left:3px;width:calc((100% - 8px) / 2);
+    border-radius:999px;background:var(--surface-2);transition:transform .28s cubic-bezier(.22,.61,.36,1)}
+  .lang-switch:has(button[data-lang="en"][aria-pressed="true"])::before{transform:translateX(calc(100% + 2px))}
+  .lang-switch button{
+    flex:1 1 0;min-width:40px;text-align:center;
+    font-family:"Manrope",sans-serif;font-weight:700;font-size:12px;letter-spacing:.08em;
+    color:var(--muted);background:none;border:0;padding:6px 11px;border-radius:999px;cursor:pointer;
+    transition:color .28s;
+  }
+  .lang-switch button:hover{color:var(--text)}
+  .lang-switch button[aria-pressed="true"]{color:var(--text)}
+  .lang-switch button:focus-visible{outline:2px solid var(--accent-soft);outline-offset:2px}
+  .nav a{
+    font-family:"Manrope",sans-serif;font-weight:600;
+    font-size:13px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--muted);transition:color .2s;
+  }
+  .nav a:hover{color:var(--text)}
+
+  .burger{display:none;background:none;border:0;cursor:pointer;padding:8px}
+  .burger span{display:block;width:22px;height:2px;background:var(--text);margin:4px 0;transition:.25s}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;isolation:isolate;overflow:hidden;margin-top:-78px;padding:134px 0 24px}
+  /* фон первого экрана: «перемотка» эпичных кадров (монтаж/фон-первого-экрана.js) */
+  .hero-bg{position:absolute;inset:0;z-index:-1;background:#000 url(img/hero-bg.jpg) center/cover}
+  .hero-bg video{width:100%;height:100%;object-fit:cover;display:block}
+  .hero-bg::after{
+    content:"";position:absolute;inset:0;
+    background:
+      linear-gradient(90deg, rgba(9,9,12,.70) 0%, rgba(9,9,12,.40) 50%, rgba(9,9,12,.70) 100%),
+      linear-gradient(180deg, rgba(9,9,12,.55) 0%, rgba(9,9,12,.25) 35%, rgba(9,9,12,.55) 75%, var(--bg) 100%);
+  }
+  .hero-grid{
+    display:grid;grid-template-columns:1.25fr .9fr;
+    gap:56px;align-items:start;
+  }
+  /* первый экран по макету: логотип DOBERMAN (img/doberman.svg, вставлен в разметку) во всю ширину колонки,
+     под ним подстрочник «AI creative studio», справа вертикальная надпись; ниже торчит кусок деморила.
+     Логотип ограничен и по высоте окна (пропорции 2.66 : 1), чтобы деморил выглядывал на любом экране. */
+  .hero-head{position:relative;padding:0 60px 0 52px}   /* не колонка .wrap, а вся ширина окна (по макету) */
+  .hero .hero-word{margin:0;line-height:0}
+  .hero .hero-word{cursor:default}
+  .hero .hero-word .logo{display:block;width:100%;height:auto}   /* всегда во всю ширину окна (по макету) */
+  .hero-sub2{margin:12px 0 0;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:400;
+    font-size:clamp(18px, 2.2vw, 30px);line-height:1.2;letter-spacing:0}
+  .hero-route{position:fixed;z-index:40;right:26px;top:210px;margin:0;writing-mode:vertical-rl;white-space:nowrap;
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:400;font-size:12px;letter-spacing:.02em;color:#fff}
+  @media(max-width:760px){ .hero-route{display:none} }   /* на узком экране налезает на логотип */
+  @media(max-height:560px){ .hero-route{display:none} }  /* на низком окне налезает на значок Instagram */
+  /* плашка над деморилом – того же цвета, что логотип */
+  .reel-tag{display:inline-block;margin:0 0 8px;padding:5px 16px 4px;background:currentColor;
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:400;font-size:clamp(16px, 2vw, 26px);line-height:1.15}
+  .reel-tag span{color:#000}
+  /* заголовок раздела по макету: маленькая плашка цвета логотипа + тонкая линия */
+  .sec-head{text-align:left;border-bottom:1px solid #3a3a42;padding-bottom:12px;margin-bottom:34px}
+  .sec-tag{display:inline-block;padding:3px 10px 2px;background:currentColor;
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:400;font-size:15px;line-height:1.2;text-transform:uppercase;letter-spacing:.01em}
+  .sec-tag span{color:#000}
+
+  /* цвета: розовый → жёлтый → зелёный → синий → фиолетовый → снова розовый;
+     каждый держится 6 с и за 1 с переливается в следующий (круг 35 с).
+     Логотип, подстрочник и плашка меняют цвет вместе; при заходе стартуем со случайного из основных цветов */
+  .tint{color:color(srgb 1 0.098 1);animation:tint 35s linear infinite;animation-delay:var(--tint-delay, 0s)}
+  @keyframes tint{
+    0%,17.143%{color:color(srgb 1 0.098 1)}   /* розовый 255,25,255 */
+    20%,37.143%{color:color(srgb 0.902 1 0.098)}   /* жёлтый 230,255,25 */
+    40%,57.143%{color:color(srgb 0 0.8235 0)}   /* зелёный 0,210,0 */
+    60%,77.143%{color:color(srgb 0 0.098 1)}   /* синий 0,25,255 */
+    80%,97.143%{color:color(srgb 0.5882 0 1)}   /* фиолетовый 150,0,255 */
+    100%{color:color(srgb 1 0.098 1)}
+  }
+  @media(prefers-reduced-motion:reduce){ .tint{animation:none} }
+  /* знак-доберман в левом верхнем углу (img/doberman-pes.svg), вне колонки – у края окна, как на макете */
+  .pes{position:absolute;left:52px;top:50%;width:46px;height:46px;margin-top:-23px;z-index:2;display:block}
+  .pes svg{display:block;width:100%;height:100%}
+  @media(max-width:760px){ .pes{left:16px;width:38px;height:38px;margin-top:-19px} }
+  .hero h1{
+    font-family:"Manrope",sans-serif;font-weight:800;
+    font-size:clamp(42px,6vw,72px);line-height:1.03;
+    letter-spacing:-.02em;margin:20px 0 26px;
+  }
+  .hero-sub{color:var(--muted);font-size:17px;max-width:480px;margin-bottom:36px}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:14px;
+    font-family:"Manrope",sans-serif;font-weight:700;
+    font-size:14px;letter-spacing:.09em;text-transform:uppercase;
+    padding:16px 26px;border-radius:12px;cursor:pointer;border:0;
+    color:#fff;background:var(--accent);
+    transition:background .2s,transform .2s,box-shadow .2s;
+    box-shadow:0 12px 30px -10px rgba(79,91,242,.6);
+  }
+  .btn:hover{background:var(--accent-hover);transform:translateY(-2px);box-shadow:0 16px 36px -10px rgba(79,91,242,.75)}
+  .btn .arrow{
+    width:34px;height:34px;border-radius:8px;
+    background:rgba(255,255,255,.15);display:grid;place-items:center;
+    transition:transform .25s var(--ease);
+  }
+  .btn:hover .arrow{transform:translateX(4px)}
+  .btn .arrow svg{width:16px;height:16px;stroke:#fff}
+  .btn-ghost{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:"Manrope",sans-serif;font-weight:700;
+    font-size:14px;letter-spacing:.09em;text-transform:uppercase;
+    padding:16px 22px;border-radius:12px;
+    border:1px solid var(--line-strong);color:var(--text);
+    transition:border-color .2s,background .2s;
+  }
+  .btn-ghost:hover{border-color:var(--accent);background:var(--surface)}
+  .btn-ghost svg{width:18px;height:18px;fill:var(--accent-soft)}
+
+  .hero-aside{padding-top:6px}
+  .hero-aside p{color:var(--muted);font-size:16px;line-height:1.75;max-width:340px}
+  .hero-tags{
+    margin-top:26px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    font-family:"Manrope",sans-serif;font-weight:600;font-size:14px;color:var(--accent-soft);
+  }
+  .hero-tags .dot{color:var(--muted-dim)}
+  .hero-tags .spark{width:15px;height:15px;fill:var(--accent-soft)}
+
+
+  /* ---------- SHOWREEL ---------- */
+  .media-frame{
+    position:relative;border-radius:var(--radius-lg);overflow:hidden;
+    aspect-ratio:16/8.1;border:1px solid var(--line);
+    background:
+      radial-gradient(120% 90% at 78% 18%, rgba(255,196,140,.28), transparent 55%),
+      radial-gradient(90% 120% at 12% 90%, rgba(79,91,242,.22), transparent 60%),
+      linear-gradient(180deg,#14161d 0%, #0b0c11 100%);
+  }
+  .media-frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .media-frame::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(180deg, transparent 50%, rgba(0,0,0,.6));
+  }
+  .media-tag{
+    position:absolute;left:22px;bottom:20px;z-index:2;
+    font-family:"Manrope",sans-serif;font-weight:600;font-size:11px;
+    letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.7);
+  }
+  .play{
+    position:absolute;right:22px;bottom:18px;z-index:2;
+    width:52px;height:52px;border-radius:50%;cursor:pointer;
+    background:rgba(255,255,255,.12);backdrop-filter:blur(6px);
+    border:1px solid rgba(255,255,255,.25);
+    display:grid;place-items:center;transition:.25s var(--ease);
+  }
+  .play:hover{background:var(--accent);border-color:var(--accent);transform:scale(1.06)}
+  .play svg{width:18px;height:18px;fill:#fff;margin-left:3px}
+  .play::after{
+    content:"";position:absolute;inset:-1px;border-radius:50%;
+    border:1px solid rgba(255,255,255,.35);animation:pulse 2.6s ease-out infinite;
+  }
+  @keyframes pulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.5);opacity:0}}
+
+  /* ---------- SOON-заглушки (пока нет роликов) ---------- */
+  /* три размытых цветных пятна плавают каждое по своей траектории + раз в 9 с проходит блик.
+     Пятна мягкие за счёт radial-gradient, без filter:blur – анимация лёгкая даже на телефоне */
+  .soon{position:absolute;inset:0;overflow:hidden;background:#0c0d13}
+  .soon-art{position:absolute;inset:-30%}
+  .soon-art i{
+    position:absolute;display:block;width:60%;height:66%;border-radius:50%;
+    background:radial-gradient(closest-side, var(--c), transparent);
+    will-change:transform;
+  }
+  .soon-art i:nth-child(1){--c:var(--c1,rgba(79,91,242,.75));left:8%;top:14%;animation:blob1 17s ease-in-out infinite alternate}
+  .soon-art i:nth-child(2){--c:var(--c2,rgba(255,170,120,.5));left:40%;top:36%;animation:blob2 21s ease-in-out infinite alternate}
+  .soon-art i:nth-child(3){--c:var(--c3,rgba(124,134,247,.6));left:30%;top:2%;width:46%;height:52%;animation:blob3 25s ease-in-out infinite alternate}
+  @keyframes blob1{
+    33%{transform:translate(28%,18%) scale(1.18)}
+    66%{transform:translate(8%,34%) scale(.92)}
+    100%{transform:translate(36%,4%) scale(1.1)}
+  }
+  @keyframes blob2{
+    40%{transform:translate(-34%,-14%) scale(.86)}
+    100%{transform:translate(-12%,-34%) scale(1.2)}
+  }
+  @keyframes blob3{
+    50%{transform:translate(18%,40%) scale(1.25)}
+    100%{transform:translate(-22%,26%) scale(.9)}
+  }
+  .soon::after{                              /* медленный световой блик */
+    content:"";position:absolute;inset:-50% -100%;
+    background:linear-gradient(105deg, transparent 42%, rgba(255,255,255,.07) 50%, transparent 58%);
+    animation:sheen 9s ease-in-out infinite;
+  }
+  @keyframes sheen{0%,35%{transform:translateX(-35%)}75%,100%{transform:translateX(35%)}}
+  .soon-label{position:absolute;inset:0;z-index:2;display:grid;place-items:center}
+  .soon-label span{
+    font-family:"Manrope",sans-serif;font-weight:800;font-size:12px;
+    letter-spacing:.34em;text-transform:uppercase;color:rgba(255,255,255,.88);
+    padding:10px 16px 10px 21px;border-radius:999px;
+    background:rgba(9,9,12,.3);border:1px solid rgba(255,255,255,.18);
+    backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+    animation:breathe 4.5s ease-in-out infinite;
+  }
+  @keyframes breathe{50%{opacity:.6;border-color:rgba(255,255,255,.08)}}
+  .media-frame .soon-label span{font-size:15px;padding:13px 22px 13px 27px}
+  .work:nth-child(2) .soon{--c1:rgba(255,120,150,.45);--c2:rgba(79,91,242,.5);--c3:rgba(255,200,140,.3)}
+  .work:nth-child(3) .soon{--c1:rgba(60,200,220,.4);--c2:rgba(124,134,247,.5);--c3:rgba(79,91,242,.35)}
+  .work:nth-child(4) .soon{--c1:rgba(255,180,100,.4);--c2:rgba(200,90,240,.4);--c3:rgba(79,91,242,.4)}
+  .work:nth-child(5) .soon{--c1:rgba(124,134,247,.55);--c2:rgba(60,220,170,.3);--c3:rgba(255,150,120,.3)}
+  .work:nth-child(6) .soon{--c1:rgba(220,90,200,.4);--c2:rgba(255,190,120,.35);--c3:rgba(79,91,242,.45)}
+
+  /* ---------- WORKS (деморил + сетка 2×3) ---------- */
+  .works{padding-top:8px}
+  .works-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:34px 26px;margin-top:34px}
+  .work-media{
+    position:relative;aspect-ratio:16/9;border-radius:var(--radius);overflow:hidden;
+    border:1px solid var(--line);background:#000;
+  }
+  .work-media video{width:100%;height:100%;object-fit:contain;background:#000}
+  /* вертикальный ролик в горизонтальной рамке: по бокам – его же кадр, размытый */
+  .work-media.is-vertical::before{
+    content:"";position:absolute;inset:-30px;
+    background:var(--poster) center/cover;filter:blur(26px) brightness(.5);
+  }
+  .work-media.is-vertical video{position:relative;background:transparent}
+  /* плашка «▶ Смотреть · 0:31» в углу обложки; панель управления появляется после запуска */
+  .work-media video{transition:transform .7s var(--ease)}
+  .work:hover .work-media:not(.playing) video{transform:scale(1.035)}
+  .work-play{
+    position:absolute;left:16px;bottom:16px;z-index:2;
+    display:inline-flex;align-items:center;gap:10px;
+    padding:6px 16px 6px 6px;border-radius:999px;cursor:pointer;
+    font-family:"Manrope",sans-serif;font-weight:700;font-size:13px;letter-spacing:.02em;color:#fff;
+    background:rgba(12,12,18,.5);backdrop-filter:blur(12px) saturate(1.4);-webkit-backdrop-filter:blur(12px) saturate(1.4);
+    border:1px solid rgba(255,255,255,.18);
+    box-shadow:0 10px 30px -12px rgba(0,0,0,.7);
+    transition:transform .3s var(--ease),border-color .3s,background .3s;
+  }
+  .work-play[hidden]{display:none}
+  .reel-play{left:22px;bottom:20px;padding-right:18px;font-size:14px}
+  .reel-play .ic{width:36px;height:36px}
+  .work-play .ic{
+    width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
+    background:#fff;transition:background .3s,transform .3s var(--ease);
+  }
+  .work-play .ic svg{width:12px;height:12px;fill:#0b0b10;margin-left:2px;transition:fill .3s}
+  .work-play .dur{color:rgba(255,255,255,.6);font-weight:600;font-variant-numeric:tabular-nums}
+  .work-play .dur::before{content:"·";margin-right:8px;color:rgba(255,255,255,.35)}
+  .work:hover .work-play,.media-frame:hover .reel-play,.work-play:focus-visible{transform:translateY(-2px);border-color:rgba(124,134,247,.6);background:rgba(12,12,18,.65)}
+  .work:hover .work-play .ic,.media-frame:hover .reel-play .ic,.work-play:focus-visible .ic{background:var(--accent);transform:scale(1.06)}
+  .work:hover .work-play .ic svg,.media-frame:hover .reel-play .ic svg,.work-play:focus-visible .ic svg{fill:#fff}
+  .work-play:focus-visible{outline:2px solid var(--accent-soft);outline-offset:3px}
+  .work-media::after{                       /* затемнение снизу, чтобы плашка читалась на светлом кадре */
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(180deg, transparent 55%, rgba(0,0,0,.45));
+    transition:opacity .3s;
+  }
+  .work-media.playing::after{opacity:0}
+  .work-media:not(.playing),.media-frame:has(video){cursor:pointer}   /* клик в любое место обложки запускает ролик */
+  .work h3{
+    font-family:"Manrope",sans-serif;font-weight:700;font-size:16px;
+    margin:16px 0 4px;
+  }
+  .work p{color:var(--muted);font-size:14px}
+  .work h3 .year{color:var(--muted-dim);font-weight:600}
+
+  /* ---------- CLIENTS ---------- */
+  .clients{padding:0 0 8px;margin-top:96px}
+  /* список клиентов по макету: крупный узкий жирный шрифт (Anton), через точку, по центру */
+  .client-list{margin:0;text-align:center;font-family:"Anton","Manrope",sans-serif;font-weight:400;text-transform:uppercase;
+    font-size:clamp(26px, 4.4vw, 54px);line-height:1.06;letter-spacing:.005em;color:#fff;
+    text-wrap:balance}   /* строки примерно равной длины, без одиноких имён в конце */
+  .client-list span{white-space:nowrap}
+  .client-list i{font-style:normal;color:#fff}
+  .client-dash{display:block;width:46px;height:5px;margin:18px auto 20px;background:#fff}
+
+  /* ---------- КНИГА ---------- */
+  .book-wrap{display:grid;grid-template-columns:1fr 1.05fr;gap:56px;align-items:center}
+  .book-stage{
+    position:relative;height:560px;display:grid;place-items:center;
+    perspective:1400px;
+  }
+  .book-stage::before{
+    content:"";position:absolute;inset:6% 4%;border-radius:50%;
+    background:radial-gradient(closest-side, rgba(79,91,242,.32), transparent);
+    filter:blur(30px);pointer-events:none;
+  }
+  .book-stage::after{                       /* тень на «полу» */
+    content:"";position:absolute;left:50%;bottom:34px;width:260px;height:30px;margin-left:-130px;
+    border-radius:50%;background:radial-gradient(closest-side, rgba(0,0,0,.75), transparent);
+    animation:shadow 6s ease-in-out infinite;pointer-events:none;
+  }
+  .book-float{transform-style:preserve-3d;animation:float 6s ease-in-out infinite}
+  @keyframes float{50%{transform:translateY(-16px)}}
+  @keyframes shadow{50%{transform:scale(.82);opacity:.7}}
+  .book{
+    --w:290px;--h:calc(var(--w) * 296 / 228);--t:30px;
+    --ry:28deg;--rx:8deg;
+    position:relative;display:block;width:var(--w);height:var(--h);
+    padding:0;border:0;background:none;cursor:pointer;
+    transform-style:preserve-3d;
+    transform:rotateX(var(--rx)) rotateY(var(--ry));
+    transition:transform .6s var(--ease);
+  }
+  .book.tracking{transition:transform .15s linear}
+  @media(hover:none){                      /* на телефоне курсора нет – книга сама покачивается */
+    .book{animation:sway 7s ease-in-out infinite alternate}
+    @keyframes sway{
+      from{transform:rotateX(8deg) rotateY(16deg)}
+      to{transform:rotateX(4deg) rotateY(40deg)}
+    }
+  }
+  .book:focus-visible{outline:2px solid var(--accent-soft);outline-offset:14px;border-radius:6px}
+  .book > i{position:absolute;display:block}
+  .b-front{
+    inset:0;transform:translateZ(calc(var(--t) / 2));
+    background:#000 url(img/book-cover.jpg) center/cover;
+    border-radius:2px 5px 5px 2px;overflow:hidden;
+    box-shadow:inset 3px 0 6px rgba(255,255,255,.08);
+  }
+  .b-front::after{                          /* блик, следует за курсором */
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(circle at var(--gx,25%) var(--gy,15%), rgba(255,255,255,.22), transparent 42%);
+  }
+  .b-back{
+    inset:0;transform:rotateY(180deg) translateZ(calc(var(--t) / 2));
+    background:#0b0b0e;border-radius:5px 2px 2px 5px;
+  }
+  .b-spine{
+    top:0;left:calc(50% - var(--t) / 2);width:var(--t);height:100%;
+    transform:rotateY(-90deg) translateZ(calc(var(--w) / 2));
+    background:#0b0b0e url(img/book-spine.jpg) center/100% 100%;   /* настоящий корешок с фото книги */
+    border-radius:3px 0 0 3px;
+  }
+  .b-pages{
+    top:4px;height:calc(100% - 8px);left:calc(50% - var(--t) / 2 + 2px);width:calc(var(--t) - 4px);
+    transform:rotateY(90deg) translateZ(calc(var(--w) / 2 - 4px));
+    background:repeating-linear-gradient(90deg,#f2eee5 0 2px,#d6d1c5 2px 3px);
+  }
+  .b-top,.b-bottom{
+    left:2px;width:calc(100% - 6px);top:calc(50% - var(--t) / 2 + 2px);height:calc(var(--t) - 4px);
+    background:repeating-linear-gradient(0deg,#f2eee5 0 2px,#d6d1c5 2px 3px);
+  }
+  .b-top{transform:rotateX(90deg) translateZ(calc(var(--h) / 2 - 4px))}
+  .b-bottom{transform:rotateX(-90deg) translateZ(calc(var(--h) / 2 - 4px))}
+  .book-hint{
+    position:absolute;left:0;right:0;bottom:0;text-align:center;
+    font-size:13px;color:var(--muted-dim);letter-spacing:.04em;
+  }
+
+  .book-text .eyebrow{display:block;margin-bottom:16px}
+  .book-text h2{
+    font-family:"Manrope",sans-serif;font-weight:800;
+    font-size:clamp(30px,4.2vw,46px);line-height:1.08;letter-spacing:-.015em;margin-bottom:22px;
+  }
+  .book-text p{color:var(--muted);font-size:16px;line-height:1.7;margin-bottom:16px;max-width:500px}
+  .book-text p b{color:var(--text);font-weight:600}
+  .book-facts{display:flex;flex-wrap:wrap;gap:28px;margin:30px 0 34px}
+  .book-facts div b{display:block;font-family:"Manrope",sans-serif;font-weight:800;font-size:30px;line-height:1.1}
+  .book-facts div span{color:var(--muted);font-size:13.5px}
+  .book-actions{display:flex;flex-wrap:wrap;gap:12px}
+
+  /* окно с подробностями о книге */
+  .sheet-modal{
+    position:fixed;inset:0;z-index:100;display:none;
+    align-items:center;justify-content:center;padding:24px;
+    background:rgba(5,5,8,.88);backdrop-filter:blur(8px);
+  }
+  .sheet-modal.open{display:flex}
+  .sheet{
+    position:relative;width:100%;max-width:900px;max-height:88vh;overflow:auto;
+    display:grid;grid-template-columns:230px 1fr;gap:36px;
+    padding:40px;border-radius:var(--radius-lg);
+    background:var(--surface);border:1px solid var(--line-strong);
+    box-shadow:0 40px 100px -30px rgba(0,0,0,.9);
+    animation:pop .35s var(--ease);
+  }
+  @keyframes pop{from{opacity:0;transform:translateY(16px) scale(.98)}}
+  .sheet-cover{width:100%;border-radius:4px;box-shadow:0 20px 50px -15px rgba(0,0,0,.9)}
+  .sheet .modal-close{top:14px;right:14px}
+  .sheet .eyebrow{display:block;margin-bottom:12px}
+  .sheet h3{font-family:"Manrope",sans-serif;font-weight:800;font-size:28px;line-height:1.15;margin-bottom:8px}
+  .sheet .by{color:var(--muted);font-size:15px;margin-bottom:22px}
+  .sheet p{color:var(--muted);font-size:15px;line-height:1.7;margin-bottom:14px}
+  .sheet h4{font-family:"Manrope",sans-serif;font-weight:700;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted-dim);margin:26px 0 12px}
+  .sheet ul{list-style:none;display:grid;gap:9px;font-size:15px}
+  .sheet li{position:relative;padding-left:18px}
+  .sheet li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--accent-soft)}
+  .sheet dl{display:grid;grid-template-columns:auto 1fr;gap:8px 20px;font-size:14px}
+  .sheet dt{color:var(--muted-dim)}
+  .sheet .why{
+    margin-top:26px;padding:18px 20px;border-radius:var(--radius);
+    background:rgba(124,134,247,.08);border:1px solid rgba(124,134,247,.25);
+    color:var(--text);font-size:15px;line-height:1.65;
+  }
+  .sheet .book-actions{margin-top:26px}
+
+  /* ---------- FOOTER / CONTACT ---------- */
+  .footer{padding:0 0 60px;text-align:center;margin-top:96px}
+  .footer h2{
+    font-family:"Manrope",sans-serif;font-weight:800;
+    font-size:clamp(26px,4vw,38px);letter-spacing:-.01em;margin-bottom:14px;
+  }
+  /* контакты по макету: две колонки, Helvetica, белым */
+  .contacts{display:grid;grid-template-columns:1fr 1fr;gap:40px;max-width:900px;margin:0 auto 70px;
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:400;color:#fff}
+  .city{display:flex;flex-direction:column;align-items:center;gap:22px}
+  .city-name{margin:0;font-size:clamp(22px, 2.3vw, 30px);line-height:1.2}
+  .city-phone{font-size:clamp(18px, 1.9vw, 25px);color:#fff;transition:opacity .2s}
+  .city-phone:hover{opacity:.75}
+
+  .foot-bar{
+    margin-top:70px;padding-top:26px;border-top:1px solid var(--line);
+    display:flex;align-items:flex-start;justify-content:space-between;gap:16px 30px;flex-wrap:wrap;
+    color:var(--muted-dim);font-size:13px;text-align:left;
+  }
+  .foot-bar .req{display:grid;gap:4px}
+  .legal-links{display:flex;flex-wrap:wrap;gap:8px 20px}
+  .legal-links a{color:var(--muted-dim);transition:color .2s}
+  .legal-links a:hover{color:var(--text)}
+
+  /* ---------- ПЛАВАЮЩАЯ КНОПКА TELEGRAM (только телефон) ---------- */
+  /* Instagram Ильи справа внизу (по референсу): круг + значок, без подписи; всегда на месте при прокрутке.
+     Круглые значки (.ico-round) – цвета логотипа (.tint); при наведении кружок заливается белым */
+  .social{position:fixed;right:18px;bottom:calc(20px + env(safe-area-inset-bottom, 0px));z-index:60;
+    display:flex;flex-direction:column;gap:12px}
+  .ico-round{position:relative;isolation:isolate;overflow:hidden;display:grid;place-items:center;
+    width:54px;height:54px;border-radius:50%;border:2px solid currentColor;background:rgba(9,9,12,.35)}
+  .ico-round svg{width:26px;height:26px;display:block}
+  /* наведение: кружок плавно «наливается» белым слева направо; контур и значок – как были (цвета логотипа) */
+  .ico-round::before{content:"";position:absolute;inset:-1px;z-index:-1;background:#fff;
+    transform:translateX(-102%);transition:transform .35s cubic-bezier(.22,.61,.36,1)}
+  .ico-round:hover::before,.ico-round:focus-visible::before{transform:none}
+
+  /* ---------- VIDEO MODAL ---------- */
+  .modal{
+    position:fixed;inset:0;z-index:100;display:none;
+    align-items:center;justify-content:center;padding:24px;
+    background:rgba(5,5,8,.92);backdrop-filter:blur(8px);
+  }
+  .modal.open{display:flex}
+  .modal video{
+    max-width:min(1200px,100%);max-height:86vh;width:auto;
+    border-radius:12px;background:#000;box-shadow:0 30px 80px -20px rgba(0,0,0,.8);
+  }
+  .modal-close{
+    position:absolute;top:18px;right:18px;width:44px;height:44px;border-radius:50%;
+    background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+    color:#fff;font-size:22px;line-height:1;cursor:pointer;transition:background .2s;
+  }
+  .modal-close:hover{background:var(--accent)}
+
+  /* ---------- REVEAL ---------- */
+  .js .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+  .js .reveal.in{opacity:1;transform:none}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:880px){
+    .nav{
+      position:fixed;inset:78px 0 auto 0;flex-direction:column;gap:0;
+      background:rgba(9,9,12,.97);backdrop-filter:blur(14px);
+      border-bottom:0;   /* у закрытого меню нет даже 1 px – иначе под шапкой висит тёмная полоска */
+      max-height:0;overflow:hidden;transition:max-height .35s var(--ease);
+    }
+    .nav.open{max-height:420px;border-bottom:1px solid var(--line)}
+    .nav a{padding:18px 24px;border-bottom:1px solid var(--line)}
+    .burger{display:block}
+    .lang-switch{margin-left:auto;margin-right:6px}
+    .hero-grid{grid-template-columns:1fr;gap:34px}
+    .hero-aside{border-top:1px solid var(--line);padding-top:26px}
+    .hero-aside p{max-width:none}
+    .works-grid{gap:28px 18px}
+    .book-wrap{grid-template-columns:1fr;gap:20px}
+    .book-stage{height:480px}
+    .book{--w:240px;--t:26px}
+    .sheet{grid-template-columns:1fr;padding:30px 24px}
+    .sheet-cover{width:150px}
+    .block{padding-top:72px}
+    .clients,.divided,.footer{margin-top:72px}
+    .ico-round{width:46px;height:46px}
+    .ico-round svg{width:22px;height:22px}
+    .footer{padding-bottom:140px}           /* чтобы значки соцсетей не закрывали подвал */
+  }
+  @media(max-width:520px){
+    .hero{padding:110px 0 20px}
+    .hero-head{padding:0 16px}
+    .works-grid{grid-template-columns:1fr}
+    .foot-bar{flex-direction:column}
+    .media-frame{aspect-ratio:4/3}
+    .media-tag{left:16px;bottom:16px}
+    .play{right:16px;bottom:14px}
+    .contacts{grid-template-columns:1fr;gap:44px}
+    .modal{padding:12px}
+    .book-stage{height:420px}
+    .book{--w:210px;--t:24px}
+    .sheet-modal{padding:10px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;scroll-behavior:auto!important}
+    .js .reveal{opacity:1;transform:none;transition:none}
+    .book{transition:none}
+    .hero-bg video{display:none}            /* «меньше анимаций» – только статичный кадр */
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header" id="top">
+  <a href="#top" class="pes tint" aria-label="DOBERMAN"><svg viewBox="279.72 373.21 53.51 49.4" aria-hidden="true" focusable="false"><g fill="currentColor"><path d="M293.45,376.6c-12.9,7.19-17.53,23.49-10.34,36.39c2.27,4.06,5.43,7.3,9.12,9.62l-0.01-0.01l1.09-21.96 l-2.96-3.25l0.85-16.41l5.65,7.89l-0.12-8.06l6.7,10.33l7.25-1.02l3.85,3.17l10.81-1.54l0.73,0.94l-0.52,6.54l-3.07,3.27 l-10.27,4.37l1.41,4.21l10.05,9.37c9.66-8.08,12.53-22.12,6.18-33.52C322.65,374.04,306.35,369.41,293.45,376.6z"/><polygon points="295.71,405.13 297.61,416.58 308.79,420.55"/><polygon points="304.56,406.24 304.93,409.89 311.96,418.58 311.56,407.97 311.17,406.52 308.76,411.72"/><polygon points="298.05,403.73 294.5,399.04 296.45,399.72 292.63,393.62 292.88,386.61 297.39,394.51 297.2,398.47"/><polygon points="298.16,397.94 298.58,400 301.58,392.49 303.68,392.15 302.1,391.37 300.36,391.61 299.64,391.07 300.57,392.74"/><polygon points="305.93,401.42 307.92,404.79 314.52,404.86 314.87,403.62 322.46,400.43 323.8,397.6 324.16,394.69 323.38,395.34 321.23,395.6 320.52,394.32 317.24,394.8 314.88,398.41 310.04,402.25"/><polygon points="307.89,392.41 308.28,392.92 311.85,393.53 309.97,391.66"/><polygon points="321.48,394 322.08,392.83 324.27,392.65 323.33,393.38 322.7,394.88 321.97,394.87"/><polygon points="306.81,396.45 309.42,393.85 308.01,394.11"/><polygon points="307.85,396.08 309.3,396.62 310.75,396.23 312.44,397.58 312.37,395.95 311.27,395.11 309.07,396.02 308.36,395.69"/><path d="M309.55,394.32c0.04,0.04,0.07,0.08,0.1,0.13c0.14,0.24,0.07,0.54-0.15,0.66c-0.21,0.11-0.47,0.04-0.62-0.18 l-0.27,0.25c0.27,0.35,0.72,0.48,1.08,0.28c0.4-0.22,0.52-0.75,0.27-1.19c-0.04-0.07-0.09-0.14-0.15-0.2L309.55,394.32z"/></g></svg></a>
+  <div class="wrap header-inner">
+    <nav class="nav" id="nav">
+      <a href="#works">Портфолио</a>
+      <a href="#clients">Клиенты</a>
+      <a href="#book">Книга</a>
+      <a href="#contact">Контакты</a>
+    </nav>
+
+    <div class="lang-switch" role="group" aria-label="Язык сайта">
+      <button type="button" data-lang="ru" aria-pressed="true">RU</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+
+    <button class="burger" id="burger" aria-label="Меню" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- вертикальная надпись справа: закреплена, при прокрутке стоит на месте (по макету) -->
+<p class="hero-route" aria-label="Moscow, Santa Barbara, Everywhere">Moscow → Santa Barbara → Everywhere</p>
+
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="about">
+  <div class="hero-bg" aria-hidden="true">
+    <video src="video/hero-bg.mp4" poster="img/hero-bg.jpg" autoplay muted loop playsinline preload="auto"></video>
+  </div>
+  <div class="hero-head">
+    <h1 class="hero-word tint" aria-label="DOBERMAN">
+      <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="101 195.5 1147.5 430.5" aria-hidden="true" focusable="false"><g fill="currentColor"><path d="M239.71,243.5c0-36-26.71-48-53.21-48c-23,0-61,0-85.5,0c0,39.06,0.5,390.94,0.5,430c24.5,0,62.5,0,85.5,0 c26.5,0,53.21-12,53.21-48C240.21,550.57,239.71,270.43,239.71,243.5z M178.08,465.46c-0.27,75.67-0.58,86.62-0.58,91.04 c0,4-1,8-7,8c-2.46,0-4,0-6.2,0c0-13.05,0.12-21.55,0-96.87V351.37c0.12-75.32,0-83.82,0-96.87c2.2,0,3.73,0,6.2,0c6,0,7,4,7,8 c0,4.42,0.31,15.37,0.58,91.04V465.46z"/><path d="M712.5,195.5c-26,0-82,0-82,0v429.87h58.7c0.22-29.02,0.47-192.13,0.53-199.92c2.2,0.02,3.73,0.03,6.2,0.05 c6,0.04,6.26,4.05,6.23,8.05c-0.02,2.76-0.28,164.52-0.49,191.82h63.84c0-26.93,0-181.87,0-189.37c0-23.72-11.59-37.1-27.08-43.42 c15.49-6.31,27.08-19.7,27.08-43.42l0.21-82.54c0-7.56,0-15.12,0-23.12C765.71,207.5,739,195.5,712.5,195.5z M701.79,356.54 c0,4-0.29,8-6.29,8c-2.46,0-4,0-6.2,0c0-13.05,0-99.99,0-113.04c2.2,0,3.73,0,6.2,0c6,0,6.29,4,6.29,8 C701.79,263.92,701.79,352.12,701.79,356.54z"/><path d="M468.5,195.5c-26,0-82,0-82,0v430c0,0,68.58,0,81.79,0c26.5,0,53.21-12,53.21-48c0-26.93,0-134,0-141.5 c0-23.72-11.59-37.1-27.08-43.42c15.49-6.31,27.08-19.7,27.08-43.42l0.21-82.54c0-7.56,0-15.12,0-23.12 C521.71,207.5,495,195.5,468.5,195.5z M459.79,556.54c0,4-0.29,8-6.29,8c-2.46,0-4,0-6.2,0c0-13.05,0-128.99,0-142.04 c2.2,0,3.73,0,6.2,0c6,0,6.29,4,6.29,8C459.79,434.92,459.79,552.12,459.79,556.54z M459.79,354.54c0,4-0.29,8-6.29,8 c-2.46,0-4,0-6.2,0c0-13.05,0-94.99,0-108.04c2.2,0,3.73,0,6.2,0c6,0,6.29,4,6.29,8C459.79,266.92,459.79,350.12,459.79,354.54z"/><path d="M328.5,195.5h-28.79c-26.5,0-53.21,12-53.21,48c0,15,0,307.07,0,334c0,36,26.71,48,53.21,48h28.79 c26.5,0,53.21-12,53.21-48c0-26.93,0-319,0-334C381.71,207.5,355,195.5,328.5,195.5z M319.5,556.5c0,4-1,8-6,8h-1 c-5,0-6.42-4-6.42-8c0-4.42,0-289.58,0-294c0-4,1.42-8,6.42-8h1c5,0,6,4,6,8C319.5,266.92,319.5,552.08,319.5,556.5z"/><polygon points="529,195.75 529,626 624,626 624,565 586.5,565 586.5,421.5 622.5,421.5 622.5,360.5 586.5,360.5 586.5,254.5 624.5,254.5 624.5,195.75"/><polygon points="1104,625 1104,196.38 1165,196.38 1189.5,443.49 1189.5,196.38 1248.5,196.38 1248.5,625 1181.5,625 1154.5,405.36 1154.5,625"/><polygon points="879.86,624.5 899.28,336.5 899.28,625 955,625 955,196 875.26,196 863.5,413.5 851.74,196 772,196 772,625 827.72,625 827.72,336.5 847.14,624.5"/><path d="M1075.5,196.5h-88l-29,428.5h57l4-83.29h24l4,83.29h57L1075.5,196.5z M1020.5,484.51l11-225.79l11,225.79 H1020.5z"/></g></svg>
+    </h1>
+    <p class="hero-sub2 tint">AI creative studio</p>
+  </div>
+</section>
+
+<!-- ============ PORTFOLIO: деморил + 6 роликов ============ -->
+<!--
+  Деморил: в рамке крутится video/hero-bg.mp4 (тот же ролик, что фон первого экрана, 720p без звука),
+  кнопка открывает video/showreel.mp4 (1080p со звуком). С 24.10.2026 это готовый рил 2026 – собирает монтаж/рил-2026.js
+  (старый деморил – монтаж/деморил.js, его запуск перезапишет showreel.mp4!).
+  Ролики в сетке: файл video/work-N.mp4 + обложка img/work-N.jpg + кнопка .work-play
+  (образец – любая готовая карточка ниже). Вертикальному ролику – класс is-vertical.
+  Ролики и обложки собирает монтаж/карточки.js: сначала работы 2026 года, ниже – 2025-го.
+-->
+<section class="works" id="works">
+  <div class="wrap">
+    <p class="reel-tag tint"><span>SHOWREEL 2026</span></p>
+    <div class="media-frame">   <!-- без reveal: рамка должна выглядывать снизу первого экрана сразу -->
+      <video id="reel-bg" src="video/hero-bg.mp4" poster="img/showreel.jpg" autoplay muted loop playsinline preload="auto"></video>
+      <button class="work-play reel-play" data-video="video/showreel.mp4" aria-label="Смотреть деморил со звуком на весь экран, 1:21"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>Смотреть деморил<span class="dur">1:21</span></button>
+    </div>
+
+    <div class="works-grid reveal">
+      <article class="work">
+        <div class="work-media">
+          <video src="video/work-1.mp4" poster="img/work-1.jpg" playsinline preload="metadata"></video>
+          <button class="work-play" aria-label="Смотреть: Swarovski, 0:25"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>Смотреть<span class="dur">0:25</span></button>
+        </div>
+        <h3>Swarovski <span class="year">(2026)</span></h3>
+        <p>Рекламный ролик · украшения</p>
+      </article>
+
+      <article class="work">
+        <div class="work-media">
+          <video src="video/work-2.mp4" poster="img/work-2.jpg" playsinline preload="metadata"></video>
+          <button class="work-play" aria-label="Смотреть: Teva, 0:31"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>Смотреть<span class="dur">0:31</span></button>
+        </div>
+        <h3>Teva <span class="year">(2026)</span></h3>
+        <p>Рекламный ролик · обувь</p>
+      </article>
+
+      <article class="work">
+        <div class="work-media">
+          <video src="video/work-3.mp4" poster="img/work-3.jpg" playsinline preload="metadata"></video>
+          <button class="work-play" aria-label="Смотреть: Лемана ПРО, 0:20"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>Смотреть<span class="dur">0:20</span></button>
+        </div>
+        <h3>Лемана ПРО <span class="year">(2026)</span></h3>
+        <p>Рекламный ролик</p>
+      </article>
+
+      <article class="work">
+        <div class="work-media">
+          <video src="video/work-4.mp4" poster="img/work-4.jpg" playsinline preload="metadata"></video>
+          <button class="work-play" aria-label="Смотреть: HoHo Hola, 0:25"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>Смотреть<span class="dur">0:25</span></button>
+        </div>
+        <h3>HoHo Hola <span class="year">(2026)</span></h3>
+        <p>Рекламный ролик · напитки</p>
+      </article>
+
+      <article class="work">
+        <div class="work-media">
+          <video src="video/work-5.mp4" poster="img/work-5.jpg" playsinline preload="metadata"></video>
+          <button class="work-play" aria-label="Смотреть: Полярная станция, 0:59"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>Смотреть<span class="dur">0:59</span></button>
+        </div>
+        <h3>Полярная станция <span class="year">(2025)</span></h3>
+        <p>Рекламный ролик</p>
+      </article>
+
+      <article class="work">
+        <div class="work-media">
+          <video src="video/work-6.mp4" poster="img/work-6.jpg" playsinline preload="metadata"></video>
+          <button class="work-play" aria-label="Смотреть: ASIAPAN · Марс, 0:54"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>Смотреть<span class="dur">0:54</span></button>
+        </div>
+        <h3>ASIAPAN · Марс <span class="year">(2025)</span></h3>
+        <p>Рекламный ролик</p>
+      </article>
+
+      <article class="work">
+        <div class="work-media">
+          <video src="video/work-7.mp4" poster="img/work-7.jpg" playsinline preload="metadata"></video>
+          <button class="work-play" aria-label="Смотреть: ASIAPAN · Кочевники, 0:28"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>Смотреть<span class="dur">0:28</span></button>
+        </div>
+        <h3>ASIAPAN · Кочевники <span class="year">(2025)</span></h3>
+        <p>Рекламный ролик</p>
+      </article>
+
+      <article class="work">
+        <div class="work-media">
+          <video src="video/work-8.mp4" poster="img/work-8.jpg" playsinline preload="metadata"></video>
+          <button class="work-play" aria-label="Смотреть: Stella Rosa, 0:27"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>Смотреть<span class="dur">0:27</span></button>
+        </div>
+        <h3>Stella Rosa <span class="year">(2025)</span></h3>
+        <p>Рекламный ролик</p>
+      </article>
+
+      <article class="work">
+        <div class="work-media">
+          <video src="video/work-9.mp4" poster="img/work-9.jpg" playsinline preload="metadata"></video>
+          <button class="work-play" aria-label="Смотреть: Stoller, 0:19"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>Смотреть<span class="dur">0:19</span></button>
+        </div>
+        <h3>Stoller <span class="year">(2025)</span></h3>
+        <p>Рекламный ролик</p>
+      </article>
+
+      <article class="work">
+        <div class="work-media">
+          <video src="video/work-10.mp4" poster="img/work-10.jpg" playsinline preload="metadata"></video>
+          <button class="work-play" aria-label="Смотреть: Пятёрочка, 0:23"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>Смотреть<span class="dur">0:23</span></button>
+        </div>
+        <h3>Пятёрочка <span class="year">(2025)</span></h3>
+        <p>Рекламный ролик</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ НАШИ КЛИЕНТЫ + ПРОШЛЫЕ ПРОЕКТЫ ============ -->
+<section class="clients" id="clients">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-tag tint"><span>Клиенты</span></span></div>
+    <p class="client-list"><span>OLIVER</span>&nbsp;<i>·</i> <span class="tint">BBDO</span>&nbsp;<i>·</i> <span>DDB</span>&nbsp;<i>·</i> <span>MCCANN</span>&nbsp;<i>·</i> <span>INSTINCT</span>&nbsp;<i>·</i> <span>3SBA</span>&nbsp;<i>·</i> <span>LOWE</span></p>
+    <b class="client-dash" aria-hidden="true"></b>
+    <p class="client-list"><span class="tint">NETFLIX</span>&nbsp;<i>·</i> <span>DISNEY</span>&nbsp;<i>·</i> <span>OZON</span>&nbsp;<i>·</i> <span>COURVOISIER</span>&nbsp;<i>·</i> <span>LIPTON</span>&nbsp;<i>·</i> <span>NESPRESSO</span>&nbsp;<i>·</i> <span>NESCAFE</span>&nbsp;<i>·</i> <span>INBEV</span>&nbsp;<i>·</i> <span>NESTLE</span>&nbsp;<i>·</i> <span>COCA-COLA</span>&nbsp;<i>·</i> <span class="tint">UNILEVER</span>&nbsp;<i>·</i> <span>RAIFFEISEN BANK</span>&nbsp;<i>·</i> <span>SBER</span>&nbsp;<i>·</i> <span>BAYER</span>&nbsp;<i>·</i> <span>MEGAFON</span>&nbsp;<i>·</i> <span>BEELINE</span>&nbsp;<i>·</i> <span>SABMILLER</span>&nbsp;<i>·</i> <span>FORBES</span>&nbsp;<i>·</i> <span>AVON</span>&nbsp;<i>·</i> <span>TAYLOR JAMES</span>&nbsp;<i>·</i> <span>BUDWEISER</span>&nbsp;<i>·</i> <span>MARS</span>&nbsp;<i>·</i> <span class="tint">MARTINI</span>&nbsp;<i>·</i> <span>PHILIPS</span>&nbsp;<i>·</i> <span>KRAFT FOODS</span></p>
+  </div>
+</section>
+
+<!-- ============ КНИГА ============ -->
+<section class="divided block" id="book">
+  <div class="wrap reveal"><div class="sec-head"><span class="sec-tag tint"><span>Книга</span></span></div></div>
+  <div class="wrap book-wrap reveal">
+    <div class="book-stage" id="book-stage">
+      <div class="book-float">
+        <button class="book" id="book3d" aria-label="Подробнее о книге «Предметная фотография в рекламе»">
+          <i class="b-back"></i>
+          <i class="b-pages"></i>
+          <i class="b-top"></i>
+          <i class="b-bottom"></i>
+          <i class="b-spine"></i>
+          <i class="b-front"></i>
+        </button>
+      </div>
+      <span class="book-hint">Нажмите на книгу</span>
+    </div>
+
+    <div class="book-text">
+      <h2>Мы написали книгу о рекламной съёмке</h2>
+      <p>Максим и Илья Плотниковы – соавторы книги <b>«Предметная фотография в рекламе. Схемы света и спецэффекты»</b>, изданной Студией Артемия Лебедева.</p>
+      <p>Этот опыт – в каждом нашем AI-ролике. Мы ставим свет, композицию и фактуру продукта так же, как на настоящей рекламной съёмке. Поэтому наши ролики не выглядят как нейросеть.</p>
+      <div class="book-facts">
+        <div><b>50</b><span>реальных съёмок<br>со схемами света</span></div>
+        <div><b>286</b><span>страниц<br>практики</span></div>
+        <div><b>2017</b><span>Издательство<br>Студии Лебедева</span></div>
+      </div>
+      <div class="book-actions">
+        <button class="btn" id="book-more">
+          О книге
+          <span class="arrow"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <a class="btn-ghost" href="https://www.labirint.ru/books/589747/" target="_blank" rel="noopener">Где купить</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<footer class="footer" id="contact">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-tag tint"><span>Контакты</span></span></div>
+    <!-- контакты по макету: два города; под Москвой – Telegram Ильи (по клику открывается чат), под Санта-Барбарой – телефон -->
+    <div class="contacts">
+      <div class="city">
+        <p class="city-name">Moscow</p>
+        <a class="ico-round tint" href="https://t.me/ilyaplo" target="_blank" rel="noopener" aria-label="Написать Илье в Telegram (@ilyaplo)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.9 4.3 18.7 19.6c-.2 1.1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-5 9.2-8.3c.4-.4-.1-.6-.6-.2L6.2 13.3l-4.9-1.5c-1.1-.3-1.1-1.1.2-1.6L20.5 2.9c.9-.3 1.7.2 1.4 1.4z" transform="translate(-1 0)"/></svg></a>
+      </div>
+      <div class="city">
+        <p class="city-name">Santa Barbara, CA</p>
+        <a class="city-phone" href="tel:+18052524422">1-805-252-4422</a>
+      </div>
+    </div>
+
+    <div class="foot-bar">
+      <div class="req">
+        <span>© 2026 DOBERMAN STUDIO</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<nav class="social" aria-label="Instagram">
+  <a class="ico-round tint" href="https://instagram.com/ilyaplotnikov42/" target="_blank" rel="noopener" aria-label="Instagram Ильи">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+  </a>
+</nav>
+
+<!-- ============ О КНИГЕ (окно) ============ -->
+<div class="sheet-modal" id="book-modal" role="dialog" aria-modal="true" aria-labelledby="book-title">
+  <div class="sheet">
+    <button class="modal-close" data-close aria-label="Закрыть">&times;</button>
+    <img class="sheet-cover" src="img/book-cover.jpg" alt="Обложка книги «Предметная фотография в рекламе»">
+    <div>
+      <span class="eyebrow">Книга авторов DOBERMAN</span>
+      <h3 id="book-title">Предметная фотография в рекламе</h3>
+      <p class="by">Схемы света и спецэффекты · Илья Плотников, Максим Плотников, Александра Лерой</p>
+      <p>Практическое руководство по рекламной предметной съёмке. Вместо сухой теории – 50 реальных коммерческих съёмок: для каждой показана схема света, настройки камеры и сложности, с которыми столкнулись авторы, и как они их решили.</p>
+      <p>Книга учит думать и смотреть на вещи как фотограф и даёт понимание основных способов съёмки самых разных предметов – так, чтобы результат можно было повторить.</p>
+
+      <h4>Что внутри</h4>
+      <ul>
+        <li>Основы теории света – коротко и по делу</li>
+        <li>50 разборов реальных рекламных съёмок</li>
+        <li>Схема света и параметры камеры для каждого кадра</li>
+        <li>Спецэффекты и нестандартные решения</li>
+      </ul>
+
+      <h4>О книге</h4>
+      <dl>
+        <dt>Издательство</dt><dd>Студия Артемия Лебедева, 2017</dd>
+        <dt>Объём</dt><dd>286 страниц, мелованная бумага</dd>
+        <dt>Формат</dt><dd>296 × 228 мм, твёрдый переплёт, суперобложка</dd>
+        <dt>ISBN</dt><dd>978-5-98062-087-5</dd>
+      </dl>
+
+      <div class="book-actions">
+        <a class="btn" href="https://www.labirint.ru/books/589747/" target="_blank" rel="noopener">
+          Лабиринт
+          <span class="arrow"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+        <a class="btn-ghost" href="https://www.chitai-gorod.ru/product/predmetnaya-fotografiya-v-reklame-shemy-sveta-i-speceffekty-s-o-2598620" target="_blank" rel="noopener">Читай-город</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ VIDEO MODAL ============ -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Просмотр видео">
+  <button class="modal-close" id="modal-close" aria-label="Закрыть">&times;</button>
+  <video id="modal-video" controls playsinline></video>
+</div>
+
+<script>
+  // ===== Язык =====
+  // Русский текст – в разметке. Английский – словарь lang/en.js (грузится, только когда выбрали EN).
+  // Ключ словаря – русский текст с схлопнутыми пробелами. Нет перевода → остаётся русский, ничего не ломается.
+  let dict = null;
+  const norm = (s) => s.replace(/\s+/g, ' ').trim();
+  const t = (s) => (document.documentElement.lang === 'en' && dict && dict[norm(s)]) || s;
+
+  // Шапка: фон при скролле
+  const header = document.querySelector('.site-header');
+  const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 12);
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  // Мобильное меню
+  const burger = document.getElementById('burger');
+  const nav = document.getElementById('nav');
+  burger.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open);
+  });
+  nav.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => { nav.classList.remove('open'); burger.setAttribute('aria-expanded','false'); })
+  );
+
+  // Плавное появление секций
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      });
+    }, {threshold:.12});
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+  }
+
+  // Деморил со звуком в модальном окне
+  const modal = document.getElementById('modal');
+  const modalVideo = document.getElementById('modal-video');
+  const reelBg = document.getElementById('reel-bg');
+
+  const openVideo = (src) => {
+    modalVideo.src = src;
+    modal.classList.add('open');
+    document.body.classList.add('locked');
+    if (reelBg) reelBg.pause();
+    modalVideo.play().catch(() => {});
+  };
+  const closeVideo = () => {
+    modalVideo.pause();
+    modalVideo.removeAttribute('src');
+    modalVideo.load();
+    modal.classList.remove('open');
+    document.body.classList.remove('locked');
+    if (reelBg) reelBg.play().catch(() => {});
+  };
+
+  document.querySelectorAll('[data-video]').forEach(el =>
+    el.addEventListener('click', () => openVideo(el.dataset.video))
+  );
+  document.getElementById('modal-close').addEventListener('click', closeVideo);
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeVideo(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('open')) closeVideo(); });
+
+  // ===== Книга: поворачивается за курсором, по клику – окно с подробностями =====
+  const book = document.getElementById('book3d');
+  const bookSection = document.getElementById('book');
+  const BASE = {ry: 28, rx: 8};
+  if (matchMedia('(hover:hover)').matches && !matchMedia('(prefers-reduced-motion:reduce)').matches) {
+    let frame;
+    bookSection.addEventListener('mousemove', (e) => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const r = book.getBoundingClientRect();
+        const clamp = (v) => Math.max(-1, Math.min(1, v));
+        const dx = clamp((e.clientX - (r.left + r.width / 2)) / 500);
+        const dy = clamp((e.clientY - (r.top + r.height / 2)) / 400);
+        book.classList.add('tracking');
+        book.style.setProperty('--ry', (BASE.ry + dx * 30) + 'deg');
+        book.style.setProperty('--rx', (BASE.rx - dy * 16) + 'deg');
+        const front = book.querySelector('.b-front');
+        front.style.setProperty('--gx', (50 + dx * 55) + '%');
+        front.style.setProperty('--gy', (35 + dy * 55) + '%');
+      });
+    });
+    bookSection.addEventListener('mouseleave', () => {
+      cancelAnimationFrame(frame);
+      book.classList.remove('tracking');
+      book.style.removeProperty('--ry');
+      book.style.removeProperty('--rx');
+    });
+  }
+
+  const bookModal = document.getElementById('book-modal');
+  const openBook = () => {
+    bookModal.classList.add('open');
+    document.body.classList.add('locked');
+    bookModal.querySelector('[data-close]').focus();
+  };
+  const closeBook = () => {
+    bookModal.classList.remove('open');
+    document.body.classList.remove('locked');
+    book.focus({preventScroll:true});
+  };
+  book.addEventListener('click', openBook);
+  document.getElementById('book-more').addEventListener('click', openBook);
+  bookModal.querySelector('[data-close]').addEventListener('click', closeBook);
+  bookModal.addEventListener('click', (e) => { if (e.target === bookModal) closeBook(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && bookModal.classList.contains('open')) closeBook(); });
+
+  // Запуск ролика со звуком и обычной панелью управления –
+  // по кнопке «Смотреть» или кликом в любое место обложки
+  const startCard = (media) => {
+    const video = media.querySelector('video');
+    const fromPreview = media.classList.contains('previewing');
+    media.classList.remove('previewing');
+    video.muted = false;
+    if (fromPreview) video.currentTime = 0;   // превью было с середины – смотрим с начала
+    video.controls = true;
+    media.querySelector('.work-play').hidden = true;
+    media.classList.add('playing');
+    video.play().catch(() => {});
+    video.focus({preventScroll: true});
+  };
+  document.querySelectorAll('.work-media').forEach(media => {
+    if (!media.querySelector('video')) return;
+    media.addEventListener('click', () => {
+      if (!media.classList.contains('playing')) startCard(media);   // дальше клики – обычная пауза/плей плеера
+    });
+  });
+
+  // Деморил: клик в любое место рамки – на весь экран
+  const reelFrame = reelBg && reelBg.closest('.media-frame');
+  if (reelFrame) reelFrame.addEventListener('click', (e) => {
+    if (!e.target.closest('.reel-play')) openVideo('video/showreel.mp4');
+  });
+
+  // Живое превью: навёл мышку – ролик тихо играет прямо в рамке, убрал – снова обложка.
+  // Только там, где есть мышь (на телефоне наведения нет)
+  if (matchMedia('(hover:hover)').matches && !matchMedia('(prefers-reduced-motion:reduce)').matches) {
+    document.querySelectorAll('.work-media').forEach(media => {
+      const video = media.querySelector('video');
+      if (!video) return;
+      let timer;
+      media.addEventListener('mouseenter', () => {
+        if (media.classList.contains('playing')) return;
+        timer = setTimeout(() => {                 // небольшая задержка – не дёргать ролики, когда мышь просто проезжает
+          media.classList.add('previewing');
+          video.muted = true;
+          video.play().catch(() => media.classList.remove('previewing'));
+        }, 100);
+      });
+      media.addEventListener('mouseleave', () => {
+        clearTimeout(timer);
+        if (!media.classList.contains('previewing')) return;
+        media.classList.remove('previewing');
+        video.pause();
+        video.load();                             // вернуть обложку
+      });
+    });
+  }
+
+  // Играет только один ролик со звуком: при запуске одного остальные ставятся на паузу
+  // (тихое превью при наведении других не останавливает)
+  const works = document.querySelectorAll('.work video');
+  works.forEach(v => v.addEventListener('play', () => {
+    if (v.closest('.work-media').classList.contains('previewing')) return;
+    works.forEach(o => { if (o !== v) o.pause(); });
+    if (reelBg) reelBg.pause();
+  }));
+
+  // Фоновое видео не загрузилось → показываем фирменный градиент
+  if (reelBg) reelBg.addEventListener('error', () => { reelBg.style.display = 'none'; });
+
+  // ===== Клиенты: точка-разделитель не должна висеть в конце строки =====
+  // Точка приклеена к предыдущему имени (&nbsp;), поэтому строка с точки не начинается; в конце строки – прячем
+  // (visibility, а не display – чтобы ничего не сдвинулось и переносы не поменялись)
+  const fixClientSeps = () => document.querySelectorAll('.client-list i').forEach(i => {
+    i.style.visibility = i.nextElementSibling.offsetTop > i.offsetTop ? 'hidden' : '';
+  });
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(fixClientSeps);
+
+  // ===== Наведение мышки на логотип – сразу следующий цвет, не дожидаясь 6 с =====
+  // Круг цветов: 5 цветов по 7 с (6 с держится + 1 с перелив). Перематываем все анимации .tint к началу
+  // перелива в следующий цвет и проигрываем этот перелив в 5 раз быстрее (0.2 с); потом – обычный ритм.
+  {
+    const STEP = 7000, HOLD = 6000, FAST = 5;
+    const logo = document.querySelector('.hero .hero-word');
+    let slowDown;
+    logo && logo.addEventListener('mouseenter', () => {
+      const anims = document.getAnimations().filter(a => a.animationName === 'tint');
+      if (!anims.length) return;
+      const local = anims[0].effect.getComputedTiming().localTime;   // время внутри круга с учётом случайного старта
+      const inStep = local % STEP;
+      const delta = (inStep < HOLD ? HOLD : STEP + HOLD) - inStep;   // уже переливается – сразу к следующему
+      anims.forEach(a => { a.currentTime += delta; a.playbackRate = FAST; });
+      clearTimeout(slowDown);
+      slowDown = setTimeout(() => anims.forEach(a => { a.playbackRate = 1; }), (STEP - HOLD) / FAST);
+    });
+  }
+  let sepTimer;
+  addEventListener('resize', () => { clearTimeout(sepTimer); sepTimer = setTimeout(fixClientSeps, 150); });
+
+  // ===== Переключатель RU / EN =====
+  const LANG_KEY = 'rw-lang';
+  const CYR = /[А-Яа-яЁё]/;
+  const INLINE = new Set(['B', 'STRONG', 'I', 'EM', 'A', 'SPAN', 'BR', 'SMALL']);
+  const SKIP = 'script,style,svg,video,noscript,[data-i18n-skip]';
+  const ATTRS = ['placeholder', 'aria-label', 'alt', 'title'];
+  const metaDesc = document.querySelector('meta[name="description"]');
+  const RU_META = {title: document.title, desc: metaDesc.content};
+  const missing = new Set();   // тексты без перевода – для проверки: window.__i18nMissing
+  window.__i18nMissing = missing;
+  let undo = [];
+
+  const swapText = (node, en) => {
+    const orig = node.textContent;
+    const [, lead, trail] = orig.match(/^(\s*)[\s\S]*?(\s*)$/);
+    node.textContent = lead + en + trail;
+    undo.push(() => { node.textContent = orig; });
+  };
+
+  // Элемент с простым текстом (текст + b/a/span/br) переводится целиком,
+  // сложный (с иконками и т.п.) – по отдельным кусочкам текста
+  function translateEl(el) {
+    if (el.matches(SKIP)) return;
+    const ownText = [...el.childNodes].some(n => n.nodeType === 3 && CYR.test(n.textContent));
+    if (ownText && [...el.querySelectorAll('*')].every(c => INLINE.has(c.tagName))) {
+      const key = norm(el.innerHTML);
+      if (dict[key] === undefined) { missing.add(key); return; }
+      const orig = el.innerHTML;
+      el.innerHTML = dict[key];
+      undo.push(() => { el.innerHTML = orig; });
+      return;
+    }
+    for (const node of [...el.childNodes]) {
+      if (node.nodeType === 1) translateEl(node);
+      else if (node.nodeType === 3 && CYR.test(node.textContent)) {
+        const key = norm(node.textContent);
+        if (dict[key] === undefined) missing.add(key); else swapText(node, dict[key]);
+      }
+    }
+  }
+
+  function translateAttrs() {
+    for (const a of ATTRS) document.querySelectorAll(`[${a}]`).forEach(el => {
+      const v = el.getAttribute(a);
+      if (!CYR.test(v)) return;
+      const en = dict[norm(v)];
+      if (en === undefined) { missing.add(v); return; }
+      el.setAttribute(a, en);
+      undo.push(() => el.setAttribute(a, v));
+    });
+  }
+
+  const loadDict = () => new Promise((resolve, reject) => {
+    if (dict) return resolve();
+    const s = document.createElement('script');
+    s.src = 'lang/en.js';
+    s.onload = () => { dict = window.I18N_EN || {}; resolve(); };
+    s.onerror = reject;
+    document.head.appendChild(s);
+  });
+
+  const langBtns = document.querySelectorAll('.lang-switch button');
+  async function setLang(lang, remember = true) {
+    if (lang === 'en') {
+      try { await loadDict(); } catch { return; }   // словарь не загрузился – остаёмся на русском
+    }
+    undo.reverse().forEach(f => f());   // сначала всегда возвращаемся к русскому
+    undo = [];
+    missing.clear();
+    document.documentElement.lang = lang;
+    if (lang === 'en') {
+      translateEl(document.body);
+      translateAttrs();
+      document.title = dict[norm(RU_META.title)] || RU_META.title;
+      metaDesc.content = dict[norm(RU_META.desc)] || RU_META.desc;
+    } else {
+      document.title = RU_META.title;
+      metaDesc.content = RU_META.desc;
+    }
+    langBtns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+    if (!remember) return;
+    try { localStorage.setItem(LANG_KEY, lang); } catch {}
+    try {
+      const u = new URL(location.href);
+      if (lang === 'en') u.searchParams.set('lang', 'en'); else u.searchParams.delete('lang');
+      history.replaceState(null, '', u);
+    } catch {}
+  }
+  langBtns.forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
+
+  // Язык при входе: ?lang=en|ru в ссылке → сохранённый выбор → английский (основной язык сайта)
+  {
+    const fromUrl = new URLSearchParams(location.search).get('lang');
+    let saved = null;
+    try { saved = localStorage.getItem(LANG_KEY); } catch {}
+    const initial = fromUrl === 'en' || fromUrl === 'ru' ? fromUrl : saved || 'en';
+    const show = () => document.documentElement.classList.remove('i18n-wait');
+    setTimeout(show, 2500);   // перевод не загрузился – показываем как есть
+    if (initial === 'en') setLang('en', false).finally(show); else show();
+  }
+
+</script>
+</body>
+</html>
+

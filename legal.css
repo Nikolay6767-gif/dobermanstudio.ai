@@ -1,0 +1,48 @@
+/* Общий стиль юридических страниц (политика, согласие, оферта) */
+:root{
+  --bg:#09090c;--surface:#131319;--line:rgba(255,255,255,.08);
+  --text:#f6f6f8;--muted:#a3a3ae;--muted-dim:#6f6f7b;--accent:#4f5bf2;--accent-soft:#7c86f7;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:"Inter",system-ui,-apple-system,sans-serif;font-size:16px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--accent-soft)}
+.wrap{max-width:820px;margin:0 auto;padding:0 24px}
+
+header{border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:72px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--text);text-decoration:none;font-family:"Manrope",sans-serif;font-weight:800;letter-spacing:.03em}
+.brand i{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;background:linear-gradient(150deg,var(--accent),#3a45d6)}
+.brand i svg{width:13px;height:13px;fill:#fff;margin-left:2px}
+.brand span{color:var(--muted-dim);font-weight:600}
+.back{font-size:14px;color:var(--muted);text-decoration:none}
+.back:hover{color:var(--text)}
+
+main{padding:56px 0 80px}
+h1{font-family:"Manrope",sans-serif;font-weight:800;font-size:clamp(28px,5vw,40px);line-height:1.15;letter-spacing:-.01em;margin-bottom:12px}
+.meta{color:var(--muted-dim);font-size:14px;margin-bottom:40px}
+h2{font-family:"Manrope",sans-serif;font-weight:700;font-size:20px;margin:40px 0 14px}
+p,li{color:var(--muted)}
+p{margin-bottom:12px}
+ol,ul{padding-left:22px;margin-bottom:12px;display:grid;gap:6px}
+b,strong{color:var(--text);font-weight:600}
+.card{padding:20px 24px;border-radius:14px;background:var(--surface);border:1px solid var(--line);margin:16px 0}
+.card p:last-child{margin-bottom:0}
+dl{display:grid;grid-template-columns:auto 1fr;gap:6px 20px}
+dt{color:var(--muted-dim)}
+dd{color:var(--text)}
+.ph{color:var(--accent-soft);border-bottom:1px dashed currentColor}
+
+footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted-dim);font-size:13px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px}
+footer nav{display:flex;flex-wrap:wrap;gap:6px 20px}
+footer a{color:var(--muted-dim);text-decoration:none}
+footer a:hover,footer a[aria-current]{color:var(--text)}
+
+@media(max-width:520px){
+  dl{grid-template-columns:1fr;gap:2px}
+  dd{margin-bottom:8px}
+}
