@@ -28,7 +28,7 @@ window.I18N_EN = Object.fromEntries([
 
   // --- портфолио
   [`Смотреть деморил`, `Watch showreel`],
-  [`Смотреть деморил со звуком на весь экран, 1:21`, `Watch the showreel with sound, full screen, 1:21`],
+  [`Смотреть деморил со звуком на весь экран, 1:12`, `Watch the showreel with sound, full screen, 1:12`],
   [`Смотреть`, `Watch`],
   [`Смотреть: Teva, 0:31`, `Watch: Teva, 0:31`],
   [`Смотреть: Лемана Про, 0:20`, `Watch: Lemana Pro, 0:20`],
